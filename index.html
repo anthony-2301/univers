@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Univers Agency | L'Excellence Événementielle</title>
+    
+    <!-- ATTENTION : Pour la mise en production, remplacez ce CDN par une compilation Tailwind classique -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#131313",
+                        "on-background": "#e5e2e1",
+                        "surface": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container": "#20201f",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#d0c5af",
+                        "primary": "#f2ca50",
+                        "on-primary": "#3c2f00",
+                        "primary-fixed-dim": "#e9c349",
+                        "primary-container": "#d4af37",
+                        "outline": "#99907c"
+                    },
+                    spacing: {
+                        "margin-mobile": "24px",
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "section-gap": "120px",
+                        "gutter": "24px"
+                    },
+                    fontFamily: {
+                        "headline": ["Playfair Display", "serif"],
+                        "body": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #131313; color: #e5e2e1; font-family: 'Manrope', sans-serif; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
+        
+        .glass-panel {
+            background: rgba(19, 19, 19, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .gold-border { border: 1px solid rgba(212, 175, 55, 0.3); }
+        .gold-gradient-text {
+            background: linear-gradient(to right, #f2ca50, #ffe088, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(242, 202, 80, 0.4);
+            color: transparent;
+        }
+        .input-underline {
+            border: none;
+            border-bottom: 1px solid rgba(242, 202, 80, 0.3);
+            background: transparent;
+            transition: border-color 0.3s ease;
+        }
+        .input-underline:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: #f2ca50;
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+
+<body class="selection:bg-primary selection:text-on-primary">
+
+    <!-- Navbar -->
+    <nav class="bg-surface/90 backdrop-blur-md fixed top-0 left-0 w-full z-50 border-b border-primary/20 h-20 transition-all">
+        <div class="max-w-container-max mx-auto h-full flex justify-between items-center px-margin-mobile md:px-margin-desktop">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('accueil')">
+                <img alt="UNIVERS AGENCY Logo" class="w-12 h-12 object-contain" src="assets/images/logo.jpeg"/>
+                <span class="font-display-lg text-display-lg font-extrabold text-primary tracking-tight" style="font-size: 24px; line-height: 1;">UNIVERS AGENCY</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex gap-8 items-center">
+                <a href="#accueil" class="text-on-surface hover:text-primary transition-colors text-sm font-semibold tracking-widest uppercase">Accueil</a>
+                <a href="#services" class="text-on-surface hover:text-primary transition-colors text-sm font-semibold tracking-widest uppercase">Services</a>
+                <a href="#expertise" class="text-on-surface hover:text-primary transition-colors text-sm font-semibold tracking-widest uppercase">Expertise</a>
+                <a href="#contact" class="text-on-surface hover:text-primary transition-colors text-sm font-semibold tracking-widest uppercase">Contact</a>
+                <a href="#contact" class="bg-primary text-black border border-primary px-6 py-2 text-sm font-bold uppercase tracking-widest hover:bg-transparent hover:text-primary transition-all duration-300">
+                    Réserver
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-primary focus:outline-none">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-surface border-b border-primary/20 flex-col items-center py-6 gap-6 md:hidden shadow-2xl">
+            <a href="#accueil" class="mobile-link text-on-surface hover:text-primary text-sm font-semibold tracking-widest uppercase">Accueil</a>
+            <a href="#services" class="mobile-link text-on-surface hover:text-primary text-sm font-semibold tracking-widest uppercase">Services</a>
+            <a href="#expertise" class="mobile-link text-on-surface hover:text-primary text-sm font-semibold tracking-widest uppercase">Expertise</a>
+            <a href="#contact" class="mobile-link text-on-surface hover:text-primary text-sm font-semibold tracking-widest uppercase">Contact</a>
+            <a href="#contact" class="mobile-link bg-primary text-black px-8 py-3 text-sm font-bold uppercase tracking-widest">Réserver</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- SECTION 1 : HERO -->
+        <section id="accueil" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="assets/images/9.jpeg" alt="Prestige Event Background" class="w-full h-full object-cover opacity-50 scale-105" />
+                <div class="absolute inset-0 bg-gradient-to-b from-background/40 to-background"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full reveal-on-scroll">
+                <div class="max-w-3xl space-y-8">
+                    <span class="text-sm font-semibold text-primary tracking-[0.3em] uppercase block">Votre Partenaire d'Exception</span>
+                    <h1 class="text-5xl md:text-7xl font-bold leading-tight uppercase">
+                        Laissez-nous réaliser <br><span class="gold-gradient-text italic lowercase">vos désirs</span>
+                    </h1>
+                    <p class="text-lg text-on-surface-variant max-w-xl">
+                        L'art du protocole et de la célébration sublimé par une expertise sans compromis. Univers Agency conçoit des moments inoubliables pour une clientèle exigeante.
+                    </p>
+                    <div class="flex flex-wrap gap-6 pt-4">
+                        <a href="#services" class="bg-primary text-on-primary px-10 py-4 text-sm font-bold uppercase tracking-widest hover:brightness-110 transition-all">
+                            Découvrir nos services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 : SERVICES (Bento Grid) -->
+        <section id="services" class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="mb-16 space-y-4 text-center md:text-left reveal-on-scroll">
+                <span class="text-sm text-primary tracking-[0.2em] uppercase font-bold">Nos Expertises</span>
+                <h2 class="text-4xl md:text-5xl uppercase">L'excellence au service de vos événements</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+                <!-- Protocole -->
+                <div class="md:col-span-8 group relative overflow-hidden h-[450px] gold-border reveal-on-scroll">
+                    <img src="assets/images/1.jpeg" alt="Équipe Protocole en action" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                    <div class="absolute bottom-0 p-8 space-y-3">
+                        <span class="bg-primary text-on-primary text-[10px] px-3 py-1 uppercase tracking-widest font-bold">PROTOCOLE</span>
+                        <h3 class="text-3xl font-headline text-white">Organisation Impeccable</h3>
+                        <p class="text-on-surface-variant max-w-md">Une équipe expérimentée dédiée à la rigueur logistique et au respect des traditions.</p>
+                    </div>
+                </div>
+                <!-- Wedding -->
+                <div class="md:col-span-4 group relative overflow-hidden h-[450px] gold-border reveal-on-scroll">
+                    <img src="assets/images/3.jpeg" alt="Table de Mariage de Luxe" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                    <div class="absolute bottom-0 p-8 space-y-3">
+                        <span class="bg-primary text-on-primary text-[10px] px-3 py-1 uppercase tracking-widest font-bold">WEDDING PLANNER</span>
+                        <h3 class="text-3xl font-headline text-white">Mariages de Rêve</h3>
+                        <p class="text-on-surface-variant">Une gestion clé en main pour une journée sans stress.</p>
+                    </div>
+                </div>
+                <!-- Decoration -->
+                <div class="md:col-span-4 group relative overflow-hidden h-[450px] gold-border reveal-on-scroll">
+                    <img src="assets/images/2.jpeg" alt="Décoration d'événement" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                    <div class="absolute bottom-0 p-8 space-y-3">
+                        <span class="bg-primary text-on-primary text-[10px] px-3 py-1 uppercase tracking-widest font-bold">DÉCORATION</span>
+                        <h3 class="text-3xl font-headline text-white">Lieux Magiques</h3>
+                        <p class="text-on-surface-variant">Transformez chaque espace en un univers inoubliable.</p>
+                    </div>
+                </div>
+                <!-- Location -->
+                <div class="md:col-span-8 group relative overflow-hidden h-[450px] gold-border reveal-on-scroll">
+                    <img src="assets/images/5.jpeg" alt="Salle de bal de prestige" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                    <div class="absolute bottom-0 p-8 space-y-3">
+                        <span class="bg-primary text-on-primary text-[10px] px-3 py-1 uppercase tracking-widest font-bold">LIEUX D'EXCEPTION</span>
+                        <h3 class="text-3xl font-headline text-white">Location d'espaces</h3>
+                        <p class="text-on-surface-variant max-w-md">Accédez à notre catalogue privé de domaines historiques et salles de bal prestigieuses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 : EXPERTISE (Pourquoi nous) -->
+        <section id="expertise" class="bg-surface-container-low py-section-gap border-y border-primary/10">
+            <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                    <div class="reveal-on-scroll">
+                        <span class="text-sm text-primary tracking-[0.2em] uppercase font-bold mb-4 block">Notre ADN</span>
+                        <h2 class="text-4xl md:text-5xl font-headline mb-12">Une équipe dédiée à votre prestige</h2>
+                        
+                        <div class="space-y-10">
+                            <div class="flex gap-6 group">
+                                <span class="text-6xl font-headline text-stroke leading-none group-hover:text-primary group-hover:-webkit-text-stroke-0 transition-all">01</span>
+                                <div>
+                                    <h3 class="text-2xl font-headline mb-2 text-white">Protocole Rigoureux</h3>
+                                    <p class="text-on-surface-variant">Chaque détail de l'accueil et du service est orchestré avec la précision d'un ballet diplomatique.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6 group">
+                                <span class="text-6xl font-headline text-stroke leading-none group-hover:text-primary group-hover:-webkit-text-stroke-0 transition-all">02</span>
+                                <div>
+                                    <h3 class="text-2xl font-headline mb-2 text-white">Créativité Haute-Couture</h3>
+                                    <p class="text-on-surface-variant">Nos scénographies sont conçues comme des pièces uniques, reflétant l'âme de vos célébrations.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6 group">
+                                <span class="text-6xl font-headline text-stroke leading-none group-hover:text-primary group-hover:-webkit-text-stroke-0 transition-all">03</span>
+                                <div>
+                                    <h3 class="text-2xl font-headline mb-2 text-white">Conciergerie 24/7</h3>
+                                    <p class="text-on-surface-variant">Un accompagnement sans faille pour anticiper chacun de vos besoins avant même qu'ils ne surviennent.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 reveal-on-scroll">
+                        <div class="relative overflow-hidden group border border-primary/20">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8kyXiPz5SDbBG05aQfL5f1_TMmmI648-qd6szJmzmCr1eDyowKWY4ohjc7HsxGMxw7ambYkcyIGQhe5E4qnyU-6uSn4SwqRkwxlxT7dcTGEmRYtYL9X7kqgdYRRScuq7bnvZa8TCwyQKW6Hre5aKsn67hv6DLjHuRwPt2-w66ynFZbsNY1l15WG3ohsSABim2CTQAQwSpRrdZc_1LV619A0u27M804OynI63pThP0PG_Db8qQgZDXcLwzbCJ5Ladl6i0" alt="Staff Elite" class="w-full aspect-[3/4] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-80"></div>
+                            <div class="absolute bottom-4 left-4"><span class="text-primary font-bold text-sm uppercase tracking-widest">Staff Élite</span></div>
+                        </div>
+                        <div class="relative overflow-hidden group border border-primary/20 mt-12">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPx9QrhvlRKz9RkRWlUW8mHHOe-l2o1qhokluqbn4O87xQ39PbnbUN3LofN3rr1vcJnpMrmy_gebaUPj6d6B9BP_VNiPTb67eW7bJGdZgTjv0cu4dkIXi1z4wt2SUzXkdLt43jVHYjYFviav_OmpOaN-S6w3L9t9x4k24L8HaracEFjvmRPBT4oFexLuh_3aJYKkp9kweNod4LqeIpl06kT4i9tihvjZkXV8OcgUC8ZNNlVEzTbiOyAuejMLhmozPkdnA" alt="Coordination d'événement" class="w-full aspect-[3/4] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-80"></div>
+                            <div class="absolute bottom-4 left-4"><span class="text-primary font-bold text-sm uppercase tracking-widest">Coordination</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 : CONTACT -->
+        <section id="contact" class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="mb-16 text-center md:text-left reveal-on-scroll">
+                <h2 class="text-4xl md:text-5xl font-headline mb-6 text-white">Donnez vie à vos <span class="text-primary italic lowercase">visions d'exception</span></h2>
+                <p class="text-lg text-on-surface-variant max-w-2xl">
+                    Chaque événement est une œuvre unique. Contactez notre conciergerie pour une étude personnalisée de votre projet.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+                
+                <!-- Contact Info -->
+                <div class="lg:col-span-4 space-y-12 order-2 lg:order-1 reveal-on-scroll">
+                    <div class="space-y-8">
+                        <div>
+                            <span class="text-sm text-primary uppercase font-bold block mb-2">Emplacement</span>
+                            <h3 class="text-2xl font-headline text-white">Congo & Kinshasa</h3>
+                            <p class="text-on-surface-variant mt-2">Services disponibles avec un simple appel.</p>
+                        </div>
+                        <div>
+                            <span class="text-sm text-primary uppercase font-bold block mb-4">Direct</span>
+                            <div class="space-y-4">
+                                <a href="tel:+33123456789" class="flex items-center gap-3 text-lg hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-primary">call</span> +243 978 472 024
+                                </a>
+                                <a href="mailto:contact@universagency.com" class="flex items-center gap-3 text-lg hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-primary">mail</span> contact: universagency@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                        <div class="pt-8 border-t border-primary/20 flex gap-6">
+                            <a href="#" class="hover:text-primary transition-colors">Instagram</a>
+                            <a href="#" class="hover:text-primary transition-colors">Facebook</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form (A11y Fixed) -->
+                <div class="lg:col-span-8 glass-panel p-8 md:p-12 order-1 lg:order-2 reveal-on-scroll">
+                    <form action="#" method="POST" class="space-y-10">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="relative group">
+                                <label for="nom" class="text-sm font-bold text-on-surface-variant uppercase mb-2 block transition-colors">Nom complet</label>
+                                <input type="text" id="nom" name="nom" class="w-full input-underline py-3 text-white placeholder-on-surface-variant/30" placeholder="Jean kataya" required />
+                            </div>
+                            <div class="relative group">
+                                <label for="email" class="text-sm font-bold text-on-surface-variant uppercase mb-2 block transition-colors">Email</label>
+                                <input type="email" id="email" name="email" class="w-full input-underline py-3 text-white placeholder-on-surface-variant/30" placeholder="jean@exemple.com" required />
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="relative group">
+                                <label for="type" class="text-sm font-bold text-on-surface-variant uppercase mb-2 block transition-colors">Type d'événement</label>
+                                <select id="type" name="type" class="w-full input-underline py-3 text-white bg-transparent border-primary/30">
+                                    <option class="bg-surface text-white" value="gala">Gala de Charité</option>
+                                    <option class="bg-surface text-white" value="mariage">Mariage de Luxe</option>
+                                    <option class="bg-surface text-white" value="corporate">Événement Corporate</option>
+                                    <option class="bg-surface text-white" value="autre">Autre</option>
+                                </select>
+                            </div>
+                            <div class="relative group">
+                                <label for="budget" class="text-sm font-bold text-on-surface-variant uppercase mb-2 block transition-colors">Budget estimé</label>
+                                <input type="text" id="budget" name="budget" class="w-full input-underline py-3 text-white placeholder-on-surface-variant/30" placeholder="€50,000+" />
+                            </div>
+                        </div>
+                        
+                        <div class="relative group">
+                            <label for="message" class="text-sm font-bold text-on-surface-variant uppercase mb-2 block transition-colors">Votre projet en quelques mots</label>
+                            <textarea id="message" name="message" class="w-full input-underline py-3 text-white placeholder-on-surface-variant/30 resize-none" placeholder="Décrivez l'ambiance, le nombre d'invités..." rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <input type="checkbox" id="consent" name="consent" class="rounded-none bg-transparent border-primary/50 text-primary focus:ring-primary h-5 w-5" required />
+                            <label for="consent" class="text-on-surface-variant text-sm cursor-pointer">J'accepte que mes données soient traitées pour répondre à ma demande.</label>
+                        </div>
+                        
+                        <button type="submit" class="w-full md:w-auto px-12 py-5 bg-primary text-black text-sm uppercase tracking-[0.2em] font-bold hover:bg-black hover:text-primary border border-primary transition-all duration-300">
+                            Envoyer la demande
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-surface-container-lowest border-t border-primary/30 py-16 px-margin-mobile md:px-margin-desktop">
+        <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+            <div class="max-w-sm space-y-4">
+                <span class="text-2xl font-headline text-primary block uppercase tracking-widest">Univers Agency</span>
+                <p class="text-on-surface-variant text-sm">Créateurs d'expériences mémorables pour une clientèle internationale exigeante.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12 md:gap-24">
+                <div class="space-y-4">
+                    <span class="text-sm font-bold text-primary uppercase tracking-widest">Navigation</span>
+                    <ul class="space-y-2">
+                        <li><a href="#accueil" class="text-on-surface-variant hover:text-primary transition-colors">Accueil</a></li>
+                        <li><a href="#services" class="text-on-surface-variant hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="#expertise" class="text-on-surface-variant hover:text-primary transition-colors">Pourquoi nous</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <span class="text-sm font-bold text-primary uppercase tracking-widest">Légal & Social</span>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Mentions Légales</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Politique de Confidentialité</a></li>
+                        <li><a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-container-max mx-auto mt-12 pt-8 border-t border-primary/10 text-center md:text-left text-on-surface-variant text-sm">
+            © 2024 Univers Agency. L'excellence événementielle.
+        </div>
+    </footer>
+
+    <!-- SCRIPTS JS -->
+    <script>
+        // 1. Menu Mobile Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const icon = btn.querySelector('span');
+
+        function toggleMenu() {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            icon.textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+        }
+
+        btn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // 2. Intersection Observer pour les animations d'apparition au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Optionnel : arrêter d'observer une fois affiché
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // 3. Effet Focus sur les inputs du formulaire
+        const inputs = document.querySelectorAll('.input-underline, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.previousElementSibling.classList.replace('text-on-surface-variant', 'text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.previousElementSibling.classList.replace('text-primary', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body>
+</html>
